@@ -27,7 +27,7 @@ public class ListDataActiviti extends AppCompatActivity {
     private ListView lListView, rListView;
 
     /**
-     * Gibt die daten der Datenbank in einem listView an
+     * erstellt die einzelnen elemente
      * @param savedInstanceState
      */
     @Override
@@ -51,7 +51,7 @@ public class ListDataActiviti extends AppCompatActivity {
     }
 
     /**
-     *
+     * gibt die daten der Datenbank in einem listView an
      */
     private void populateListView() {
         Log.d(TAG, "populateListView: Displaying data in the ListView.");

@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     /**
-     *
+     * löscht die Datenbank wenn sie existiert
      * @param db
      * @param i
      * @param i1
@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     /**
-     * insetet die daten in die datenbank
+     * fügt die daten in die datenbank ein
      * @param item
      * @param item2
      * @return
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     /**
-     * gibbt die daten der tabelle zurück
+     * gibbt alle daten der tabelle zurück
      * @return
      */
     public Cursor getData(){

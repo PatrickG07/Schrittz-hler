@@ -13,6 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
@@ -83,13 +84,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         this.registerReceiver(this.receiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        Notification mBuilder = new Notification.Builder(this)
-                .setContentTitle("Schritzähler")
-                .setContentText("" + stepsSinceReset)
-                .setTicker("Alert New Masage")
-                .setSmallIcon(R.mipmap.ic_launcher_round);
-
-
         btnTarget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +150,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         } else {
             toastMessage("You must put something in the text field!");
         }
+
+        Background.AtReset = stepsInSensor;
         stepAtReset = stepsInSensor;
         stepsSinceReset = 0;
 
@@ -206,6 +202,7 @@ public class MainActivity extends Activity implements SensorEventListener {
             stepsSinceReset = stepsInSensor - stepAtReset;
             tv.setText(String.valueOf(stepsSinceReset));
             Background.AtReset = stepAtReset;
+            makeNotification();
         }else{
             event.values[0] = 0;
         }
@@ -257,4 +254,26 @@ public class MainActivity extends Activity implements SensorEventListener {
             }
         }
     };
+
+    /**
+     * Ein Notification Welche die Schritte anzeigt
+     */
+    private void makeNotification(){
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setContentTitle("Schritte")
+                        .setContentText("" + stepsSinceReset)
+                        .setOngoing(true);
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        int mNotificationId = 001;
+        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification n;
+        n = mBuilder.build();
+        n.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+    }
 }
