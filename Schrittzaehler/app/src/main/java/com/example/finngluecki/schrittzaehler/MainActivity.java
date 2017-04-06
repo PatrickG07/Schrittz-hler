@@ -42,9 +42,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     public SensorManager sm;
     public Sensor sc;
-    public Sensor sd;
     public TextView tv;
-    public static int test;
 
     boolean Timer = true;
     boolean walking = false;
@@ -56,10 +54,10 @@ public class MainActivity extends Activity implements SensorEventListener {
     int c = 1;
 
     /**
-     * Erstellt die einzelnen Layout elemente
-     * Wechselt die Szene durch das Klicken auf die Button btn2ViewData und btnViewData
-     * Durch den Button btnAddData fügt es daten des TextView in die Datebank ein
-     * Durch den Button btnTarget fügt es den text des TextEdit als Target ein des Diagramms
+     * Erstellt die einzelnen Layout Elemente
+     * Wechselt die Szene durch das Klicken auf die Buttons btn2ViewData und btnViewData
+     * Durch den Button btnAddData fügt man Daten des TextViews in die Datebank ein
+     * Durch den Button btnTarget fügt man den Text des TextEdits als Target des Diagramms ein
      * @param savedInstanceState
      */
     @Override
@@ -70,7 +68,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         setContentView(R.layout.activity_main);
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sc = sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        sd = sm.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         tv = (TextView) findViewById(R.id.schritte);
         editText2 = (TextView) findViewById(R.id.schritte);
         editTarget = (EditText) findViewById(R.id.editTarget);
@@ -125,7 +122,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /**
-     * Fügt die Daten des TextViews in die datenbank ein mit dem aktuellen datum
+     * Fügt die Daten des TextViews in die Datenbank ein, mit dem aktuellen Datum
      */
     protected void onInsert(){
         String dateStr;
@@ -162,7 +159,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /**
-     * Fügt die daten in die Datenbank ein
+     * Fügt die Daten in die Datenbank ein
      * @param newEntry
      * @param newEntry2
      */
@@ -184,7 +181,9 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /**
-     *
+     * Wenn das Programm zum erstenmal gestartet wird, wird es auf 0 gesetzt
+     * Nachdem es einmal resettet wurde, werden die alten insgesamten Steps(stepsInSensor) minus die alle steps die bevor dem neusten Eintrag gemacht wurden(stepsAtReset) gerechnet
+     * und gibt diese aus
      * @param event
      */
     public void onSensorChanged(SensorEvent event) {
@@ -218,7 +217,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /**
-     * wen der sensor einen (Schritt) realisiert setzt er walking auf true um einen schrit zu zählen
+     * wenn der sensor einen (Schritt) realisiert setzt er walking auf true um einen Schritt zu zählen
      */
     protected void onResume() {
         super.onResume();
@@ -232,7 +231,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /**
-     * wen nicht gelaufen wird wird das walking auf false gesetzt
+     * wenn nicht gelaufen wird, wird walking auf false gesetzt
      */
     protected void onPause(){
         super.onPause();
@@ -240,7 +239,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /**
-     * wen die zeit 24:00 ist fügt es automatisch die daten des TextViews ein.
+     * wenn es 00:00 ist fügt es automatisch die Daten des TextViews ein.
      */
     private BroadcastReceiver receiver = new BroadcastReceiver(){
         @Override
@@ -256,7 +255,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     };
 
     /**
-     * Ein Notification Welche die Schritte anzeigt
+     * Eine Notification Welche die Schritte anzeigt
      */
     private void makeNotification(){
         NotificationCompat.Builder mBuilder =
